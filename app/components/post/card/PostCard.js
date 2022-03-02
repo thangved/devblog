@@ -105,9 +105,11 @@ export default function PostCard({ post }) {
             }
         </HStack>
         <Link href={`/post/${post.slug}`}>
-            <Markdown>
-                {`${post.content.slice(0, 200)}...`}
-            </Markdown>
+            <a>
+                <Markdown>
+                    {`${post.content.slice(0, 200)}...`}
+                </Markdown>
+            </a>
         </Link>
     </Box>
 }
