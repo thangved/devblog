@@ -3,6 +3,7 @@ import axios from "axios";
 import Head from "next/head";
 import PostCreate from '../../../../components/post/create/PostCreate';
 import constants from '../../../../config/constants';
+import { useRouter } from 'next/router';
 
 export async function getServerSideProps(context) {
     const { slug } = context.query
@@ -25,11 +26,16 @@ export async function getServerSideProps(context) {
     }
 }
 export default function PostEdit({ post }) {
+    const router = useRouter()
     return <Container maxW="container.lg">
         <Head>
             <title>{post.title}</title>
         </Head>
-        <PostCreate update post={post} />
+        <PostCreate
+            update
+            post={post}
+            onCreate={() => router.back()}
+        />
 
     </Container>
 }
