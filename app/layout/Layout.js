@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast'
 import Providers from '../providers/index'
 import Header from './Header'
 import styles from './Layout.module.scss'
@@ -10,6 +11,7 @@ export default function Layout({ children }) {
             <div className={styles.content}>
                 {children}
             </div>
+            <Toaster />
         </div>
     </Providers>
 }
