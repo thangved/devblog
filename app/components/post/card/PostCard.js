@@ -6,7 +6,7 @@ import Markdown from "../../markdown/Markdown";
 import PostTools from "../tools/PostTools";
 import styles from './PostCard.module.scss';
 
-export default function PostCard({ post, highlight }) {
+export default function PostCard({ post, highlight, disabled }) {
     const refPost = useRef()
 
     return <Box
@@ -53,12 +53,17 @@ export default function PostCard({ post, highlight }) {
                 </Link>))
             }
         </HStack>
-        <Link href={`/post/${post.slug}`}>
-            <a>
-                <Markdown>
-                    {`${post.content.slice(0, 200)}...`}
-                </Markdown>
-            </a>
-        </Link>
+        {
+            !disabled ? <Markdown>
+                {`${post.content.slice(0, 200)}...`}
+            </Markdown> : <Link href={`/post/${post.slug}`}>
+                <a>
+                    <Markdown>
+                        {`${post.content.slice(0, 200)}...`}
+                    </Markdown>
+                </a>
+            </Link>
+        }
+
     </Box>
 }

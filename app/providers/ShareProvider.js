@@ -11,7 +11,7 @@ export const Share = createContext({
 })
 
 export default function ShareProvider({ children }) {
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(false)
     const [url, setUrl] = useState('')
     const [quote, setQuote] = useState('')
 
