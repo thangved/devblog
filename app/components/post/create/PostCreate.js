@@ -71,7 +71,7 @@ export default function PostCreate({ update, post, onCreate = Function, onCancel
                                 <Badge
                                     colorScheme="green"
                                     variant="solid">
-                                    Hỗ trọ Markdown
+                                    Hỗ trợ Markdown
                                 </Badge>
                             </Tooltip>
                         </FormLabel>

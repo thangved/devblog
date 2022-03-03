@@ -1,8 +1,9 @@
-import { Avatar, Badge, Box, Container, Divider, Flex, Heading, HStack, Link, Spacer, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Container, Divider, Flex, Heading, HStack, Spacer, Text, VStack } from "@chakra-ui/react";
 import axios from "axios";
 import moment from "moment";
 import 'moment/locale/vi';
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
