@@ -37,12 +37,13 @@
         width: 100%;
         tr {
             border-bottom: 1px solid #eee;
-            th + th {
+            th + th,
+            td + td {
                 border-left: 1px solid #eee;
             }
-            td {
-                padding: 0 10px;
-                text-align: center;
+            td,
+            th {
+                padding: 10px;
             }
         }
     }
