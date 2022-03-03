@@ -59,6 +59,7 @@ export default function PostTools({ post, onRemove = () => { } }) {
         <MenuList>
             {
                 user._id === post.author?._id && <MenuItem
+                    color="red"
                     icon={<DeleteIcon />}
                     onClick={() => open({
                         open: true,
@@ -92,7 +93,7 @@ export default function PostTools({ post, onRemove = () => { } }) {
             }
             <MenuItem
                 icon={<LinkIcon />}
-                onClick={openShare}
+                onClick={() => openShare(`${document.URL.split('/')[0]}//${document.URL.split('/')[2]}/post/${post.slug}`, post.title)}
             >
                 Chia sẻ
             </MenuItem>

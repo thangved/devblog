@@ -11,20 +11,41 @@ import thinking from '../assets/images/thinking.jpg';
 import PostCard from '../components/post/card/PostCard';
 import PostCreate from '../components/post/create/PostCreate';
 import PostSkeletons from '../components/post/skeletons/PostSkeletons';
+import Weather from '../components/weather/Weather';
 import constants from '../config/constants';
 import { Auth } from '../providers/AuthProvider';
 
-export default function Home() {
+export async function getServerSideProps(context) {
+	try {
+
+		const data = (await axios.get(`${constants.api}/post/all?page=0&limit=5`)).data
+
+		return {
+			props: {
+				innitPosts: data.data || []
+			},
+		}
+	}
+	catch (error) {
+		return {
+			props: {
+				innitPosts: []
+			}
+		}
+	}
+}
+
+export default function Home({ innitPosts }) {
 	const router = useRouter()
 	const [showModal, setShowModal] = useState(false)
-	const [current, setCurrent] = useState(-1)
-	const [posts, setPosts] = useState([])
+	const [current, setCurrent] = useState(0)
+	const [posts, setPosts] = useState(innitPosts)
 	const [end, setEnd] = useState(false)
 
 	const { user } = useContext(Auth)
 
 	useEffect(() => {
-		if (current === -1 || end)
+		if (!current || end)
 			return
 		axios.get(`${constants.api}/post/all?page=${current}&limit=5`)
 			.then(({ data }) => {
@@ -42,6 +63,7 @@ export default function Home() {
 			maxW={showModal ? 'container.md' : 'container.sm'}
 			transition=".4s ease"
 		>
+			<Weather />
 			<Head>
 				<title>Trang chủ</title>
 			</Head>

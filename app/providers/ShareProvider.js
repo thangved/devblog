@@ -1,10 +1,9 @@
-import { Center, HStack, IconButton, Modal, ModalBody, ModalOverlay } from '@chakra-ui/react';
-import { createContext, useState } from 'react';
-import { ModalContent } from '@chakra-ui/react';
-import { EmailShareButton, FacebookMessengerIcon, FacebookMessengerShareButton, FacebookShareButton, LinkedinIcon, LinkedinShareButton, MailruIcon, TwitterShareButton } from 'react-share';
-import { SocialIcon } from 'react-social-icons';
 import { CopyIcon } from '@chakra-ui/icons';
+import { Center, HStack, IconButton, Modal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/react';
+import { createContext, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { FacebookMessengerShareButton, FacebookShareButton, LinkedinShareButton, TwitterShareButton } from 'react-share';
+import { SocialIcon } from 'react-social-icons';
 
 export const Share = createContext({
     openShare: Function,
@@ -16,6 +15,7 @@ export default function ShareProvider({ children }) {
     const [quote, setQuote] = useState('')
 
     const openShare = (url, quote) => {
+        console.log(url)
         setUrl(url || document.URL)
         setOpen(true)
         setQuote(quote)
