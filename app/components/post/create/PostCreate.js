@@ -1,13 +1,12 @@
-import { Button, FormControl, FormLabel, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Textarea } from "@chakra-ui/react";
-import { TagsInput } from "react-tag-input-component";
-import { useState } from 'react';
-import Markdown from "../../markdown/Markdown";
-import { useContext } from 'react';
-import { Auth } from '../../../providers/AuthProvider';
+import { Badge, Button, FormControl, FormLabel, Input, Popover, PopoverBody, PopoverContent, PopoverTrigger, Tab, TabList, TabPanel, TabPanels, Tabs, Textarea, Tooltip } from "@chakra-ui/react";
 import axios from "axios";
-import constants from '../../../config/constants';
-import { toast } from 'react-hot-toast';
 import { useFormik } from "formik";
+import { useContext, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { TagsInput } from "react-tag-input-component";
+import constants from '../../../config/constants';
+import { Auth } from '../../../providers/AuthProvider';
+import Markdown from "../../markdown/Markdown";
 
 export default function PostCreate({ update, post, onCreate = Function, onCancel = Function }) {
     const { token } = useContext(Auth)
@@ -68,7 +67,13 @@ export default function PostCreate({ update, post, onCreate = Function, onCancel
                     </FormControl>
                     <FormControl>
                         <FormLabel htmlFor="content">
-                            Nội dung
+                            Nội dung <Tooltip label="Markdown là một ngôn ngữ đánh dấu với cú pháp văn bản thô, được thiết kế để có thể dễ dàng chuyển thành HTML và nhiều định dạng khác sử dụng một công cụ cùng tên. Nó thường được dùng để tạo các tập tin readme, viết tin nhắn trên các diễn đàn, và tạo văn bản có định dạng bằng một trình biên tập văn bản thô.">
+                                <Badge
+                                    colorScheme="green"
+                                    variant="solid">
+                                    Hỗ trọ Markdown
+                                </Badge>
+                            </Tooltip>
                         </FormLabel>
                         <Textarea
                             value={formik.values.content}
