@@ -116,9 +116,10 @@ export default function MyPosts() {
                         }}
                         isChecked={selected.includes(post._id)}
                         key={post._id}>
-                        <PostCard post={post} />
+                        <PostCard
+                            disabled
+                            post={post} />
                     </Checkbox> : <PostCard
-                        disabled
                         key={post._id}
                         post={post} />
                 )).reverse()

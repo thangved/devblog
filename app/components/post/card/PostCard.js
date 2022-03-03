@@ -54,7 +54,7 @@ export default function PostCard({ post, highlight, disabled }) {
             }
         </HStack>
         {
-            !disabled ? <Markdown>
+            disabled ? <Markdown>
                 {`${post.content.slice(0, 200)}...`}
             </Markdown> : <Link href={`/post/${post.slug}`}>
                 <a>
