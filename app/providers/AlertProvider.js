@@ -1,4 +1,4 @@
-import { AlertDescription, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button } from "@chakra-ui/react";
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button } from "@chakra-ui/react";
 import { createContext, useState } from "react";
 
 export const Alert = createContext({
@@ -21,7 +21,6 @@ export default function AlertProvider({ children }) {
             open: true,
         })
     }
-
     return <Alert.Provider value={{ open }}>
         {children}
         <AlertDialog isOpen={data.open} onClose={() => {
@@ -30,7 +29,10 @@ export default function AlertProvider({ children }) {
                 open: false,
             }))
         }}>
-            <AlertDialogOverlay>
+            <AlertDialogOverlay
+                backdropFilter='auto'
+                backdropBlur='2px'
+            >
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         {data.title}

@@ -31,7 +31,10 @@ export default function Navbar() {
         <Modal
             isOpen={showModal}
             onClose={() => setShowModal(false)}>
-            <ModalOverlay>
+            <ModalOverlay
+                backdropFilter='auto'
+                backdropBlur='2px'
+            >
                 <ModalContent>
                     <ModalHeader>
                         Tài khoản

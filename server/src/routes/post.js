@@ -11,6 +11,7 @@ route.post('/remove', PostController.remove)
 route.post('/update', PostController.update)
 
 route.get('/topic/:topic', PostController.topic)
+route.get('/user/:username', PostController.user)
 route.get('/get/:slug', PostController.slug)
 route.get('/_id/:_id', PostController._id)
 route.get('/all', PostController.all)

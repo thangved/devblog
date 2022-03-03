@@ -1,10 +1,16 @@
-import { Avatar, Badge, Box, Container, Flex, Heading, Link, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Container, Divider, Flex, Heading, Link, Spacer, Stack, Text, VStack } from "@chakra-ui/react";
 import axios from "axios";
 import moment from "moment";
 import 'moment/locale/vi';
 import Head from "next/head";
+import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import Markdown from '../../../components/markdown/Markdown';
+import PostCard from '../../../components/post/card/PostCard';
+import PostSkeletons from '../../../components/post/skeletons/PostSkeletons';
+import PostTools from "../../../components/post/tools/PostTools";
 import constants from '../../../config/constants';
+import { useRouter } from 'next/router';
 
 
 export async function getServerSideProps(context) {
@@ -15,8 +21,8 @@ export async function getServerSideProps(context) {
 
         return {
             props: {
-                post: data
-            }, // will be passed to the page component as props
+                post: data || {}
+            },
         }
     }
     catch (error) {
@@ -29,22 +35,46 @@ export async function getServerSideProps(context) {
 }
 
 export default function Post({ post }) {
+    const [loading, setLoading] = useState(true)
+    const [posts, setPosts] = useState([])
+    const router = useRouter()
+
+    useEffect(() => {
+        axios.get(`${constants.api}/post/user/${post.author?.username}`)
+            .then(({ data }) => {
+                if (!data.success)
+                    return toast.error(data.message)
+
+                setPosts(data.data)
+                setLoading(false)
+            })
+            .catch(error => toast.error(error.toString()))
+    }, [post.author?.username])
     return <Container maxW="container.md">
         <Head>
             <title>
                 {post.title}
             </title>
         </Head>
-        <Heading>
-            {post.title}
-        </Heading>
+
+        <Flex mt="2">
+            <Heading flex="1">
+                {post.title}
+            </Heading>
+            <PostTools
+                post={post}
+                onRemove={() => {
+                    router.back()
+                }}
+            />
+        </Flex>
 
         <Text>
             Sửa đổi lần cuối {moment(post.updatedAt).fromNow()}
         </Text>
 
         <Stack direction="row">
-            {post.topics.map(topic => (<Link
+            {post.topics?.map(topic => (<Link
                 href={`/topic/${topic}`}
                 key={topic}>
                 <a>
@@ -58,13 +88,13 @@ export default function Post({ post }) {
         </Stack>
 
         <Flex padding="20px 0">
-            <Avatar name={post.author.fullName} />
+            <Avatar name={post.author?.fullName} />
             <Box ml="3">
                 <Text>
-                    {post.author.fullName}
+                    {post.author?.fullName}
                 </Text>
                 <Text>
-                    @{post.author.username}
+                    @{post.author?.username}
                 </Text>
             </Box>
         </Flex>
@@ -72,6 +102,24 @@ export default function Post({ post }) {
         <Markdown>
             {post.content}
         </Markdown>
+
+        <Spacer height={20} />
+
+        <Heading>
+            Bài viết cùng tác giả
+        </Heading>
+        <Divider />
+        <VStack mt="2">
+            {
+                posts.map(post => (<PostCard
+                    key={post._id}
+                    post={post} />))
+            }
+        </VStack>
+
+        {
+            loading && <PostSkeletons />
+        }
 
     </Container>
 }

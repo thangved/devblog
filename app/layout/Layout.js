@@ -4,20 +4,23 @@ import { ChakraProvider } from '@chakra-ui/react'
 import AuthProvider from '../providers/AuthProvider'
 import { Toaster } from 'react-hot-toast'
 import AlertProvider from '../providers/AlertProvider'
+import ShareProvider from '../providers/ShareProvider'
 
 export default function Layout({ children }) {
 
     return <ChakraProvider>
         <AuthProvider>
-            <AlertProvider>
-                <div className={styles.wrapper}>
-                    <Header />
-                    <div className={styles.content}>
-                        {children}
+            <ShareProvider>
+                <AlertProvider>
+                    <div className={styles.wrapper}>
+                        <Header />
+                        <div className={styles.content}>
+                            {children}
+                        </div>
                     </div>
-                </div>
-                <Toaster />
-            </AlertProvider>
+                    <Toaster />
+                </AlertProvider>
+            </ShareProvider>
         </AuthProvider>
     </ChakraProvider>
 }

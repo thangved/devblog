@@ -1,6 +1,7 @@
 const { request, response } = require('express')
 const Token = require('../utils/Token')
 const ModelPost = require('../models/ModelPost')
+const ModelUser = require('../models/ModelUser')
 
 class PostController {
     /**
@@ -10,6 +11,11 @@ class PostController {
      */
     async create(req, res) {
         const token = req.body.token
+        delete req.body.slug
+        delete req.body._id
+        delete req.body.author
+        delete req.body.createdAt
+        delete req.body.updatedAt
 
         const user = Token.resolve(token)
         if (!user)
@@ -21,6 +27,8 @@ class PostController {
         const newPost = new ModelPost({
             ...req.body,
             author: user._id,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
         })
 
         newPost.save((error) => {
@@ -130,6 +138,46 @@ class PostController {
                 }
             })),
         })
+    }
+    /**
+     * 
+     * @param {request} req 
+     * @param {response} res 
+     */
+    async user(req, res) {
+        const { username } = req.params
+        if (!username)
+            return res.send({
+                success: false,
+                message: 'Vui lòng nhập username',
+            })
+
+        try {
+            const user = await ModelUser.findOne({ username })
+            if (!user)
+                return res.send({
+                    success: false,
+                    message: 'Không tìm thấy người dùng',
+                })
+            const posts = await ModelPost.find({ author: user._id })
+                .populate('author')
+            res.send({
+                success: true,
+                data: posts.map(post => ({
+                    ...post.toObject(),
+                    author: {
+                        ...post.toObject().author,
+                        password: false,
+                    }
+                })),
+            })
+        }
+        catch (error) {
+            res.send({
+                success: false,
+                message: error.toString(),
+            })
+        }
     }
 
     /**

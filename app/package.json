@@ -24,6 +24,8 @@
     "react-hot-toast": "^2.2.0",
     "react-markdown": "^8.0.0",
     "react-scroll-trigger": "^0.6.13",
+    "react-share": "^4.4.0",
+    "react-social-icons": "^5.11.0",
     "react-syntax-highlighter": "^15.4.5",
     "react-tag-input-component": "^1.0.7",
     "rehype-katex": "^6.0.2",
