@@ -119,7 +119,7 @@ class PostController {
                 message: 'Vui lòng nhập chủ đề',
             })
 
-        const posts = await ModelPost.find({ topic }).populate('author')
+        const posts = await ModelPost.find({ topics: topic }).populate('author')
         res.send({
             success: true,
             data: posts.map(post => ({

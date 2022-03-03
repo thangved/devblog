@@ -1,4 +1,4 @@
-import { Container, Heading, VStack } from "@chakra-ui/react";
+import { Container, Divider, Heading, VStack } from "@chakra-ui/react";
 import { useContext, useState } from 'react';
 import { Auth } from '../../../providers/AuthProvider';
 import { useEffect } from 'react';
@@ -40,11 +40,13 @@ export default function MyPosts() {
             Bài viết của tôi
         </Heading>
 
+        <Divider />
+
         {
             loading && <PostSkeletons />
         }
 
-        <VStack>
+        <VStack mt="2">
             {
                 posts.map(post => (<PostCard key={post._id} post={post} />))
             }

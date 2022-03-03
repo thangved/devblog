@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Container, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Container, Flex, Heading, Link, Stack, Text } from "@chakra-ui/react";
 import axios from "axios";
 import moment from "moment";
 import 'moment/locale/vi';
@@ -44,12 +44,17 @@ export default function Post({ post }) {
         </Text>
 
         <Stack direction="row">
-            {post.topics.map(topic => (<Badge
-                key={topic}
-                colorScheme="green"
-            >
-                {topic}
-            </Badge>))}
+            {post.topics.map(topic => (<Link
+                href={`/topic/${topic}`}
+                key={topic}>
+                <a>
+                    <Badge
+                        colorScheme="green"
+                    >
+                        {topic}
+                    </Badge>
+                </a>
+            </Link>))}
         </Stack>
 
         <Flex padding="20px 0">

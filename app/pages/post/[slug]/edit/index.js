@@ -1,4 +1,4 @@
-import { Container } from "@chakra-ui/react";
+import { Container, Divider, Heading } from "@chakra-ui/react";
 import axios from "axios";
 import Head from "next/head";
 import PostCreate from '../../../../components/post/create/PostCreate';
@@ -31,10 +31,15 @@ export default function PostEdit({ post }) {
         <Head>
             <title>{post.title}</title>
         </Head>
+        <Heading>
+            Chỉnh sửa bài viết
+        </Heading>
+        <Divider />
         <PostCreate
             update
             post={post}
             onCreate={() => router.back()}
+            onCancel={() => router.back()}
         />
 
     </Container>

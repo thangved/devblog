@@ -1,4 +1,4 @@
-import { ChevronDownIcon, DeleteIcon, EditIcon, WarningIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, CopyIcon, DeleteIcon, EditIcon, WarningIcon } from "@chakra-ui/icons";
 import { Avatar, Badge, Box, Heading, HStack, IconButton, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import axios from "axios";
 import moment from "moment";
@@ -10,12 +10,14 @@ import { Alert } from '../../../providers/AlertProvider';
 import { Auth } from '../../../providers/AuthProvider';
 import Markdown from "../../markdown/Markdown";
 import styles from './PostCard.module.scss';
+import { useRouter } from 'next/router';
 
-export default function PostCard({ post }) {
+export default function PostCard({ post, highlight }) {
     const { user, token } = useContext(Auth)
     const { open } = useContext(Alert)
 
     const refPost = useRef()
+    const router = useRouter()
 
     const handleDelete = async () => {
         try {
@@ -33,6 +35,24 @@ export default function PostCard({ post }) {
         catch (error) {
             toast.error(error.toString())
         }
+    }
+
+    const handleCopy = async () => {
+        toast.promise(axios.post(`${constants.api}/post/create`, {
+            ...post,
+            token,
+            _id: null,
+        }), {
+            loading: 'Đang sao chép',
+            success: ({ data }) => {
+                if (!data.success)
+                    return data.message
+
+                router.push(`/post/${data.data.slug}`)
+                return 'Đã sao chép bài viết'
+            },
+            error: (error) => error.toString()
+        })
     }
 
     return <Box
@@ -82,6 +102,14 @@ export default function PostCard({ post }) {
                             </a>
                         </Link>
                     }
+                    {
+                        user._id === post.author._id && <MenuItem
+                            icon={<CopyIcon />}
+                            onClick={handleCopy}
+                        >
+                            Tạo bản sao
+                        </MenuItem>
+                    }
                     <MenuItem
                         icon={<WarningIcon />}
                         onClick={() => toast.success('Đã báo cáo bài viết')}
@@ -100,9 +128,15 @@ export default function PostCard({ post }) {
 
         <HStack padding="10px 0">
             {
-                post.topics.map(topic => (<Badge key={topic} colorScheme="green">
-                    {topic}
-                </Badge>))
+                post.topics.map(topic => (<Link key={topic} href={`/topic/${topic}`}>
+                    <a>
+                        <Badge
+                            colorScheme="green"
+                            variant={highlight === topic ? 'outline' : 'subtle'}>
+                            {topic}
+                        </Badge>
+                    </a>
+                </Link>))
             }
         </HStack>
         <Link href={`/post/${post.slug}`}>

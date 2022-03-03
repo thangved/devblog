@@ -2,19 +2,20 @@ import { AddIcon } from '@chakra-ui/icons';
 import { Box, Button, Container, Image, Input, VStack } from '@chakra-ui/react';
 import axios from 'axios';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import ScrollTrigger from 'react-scroll-trigger';
+import endpage from '../assets/images/endpage.jpg';
 import thinking from '../assets/images/thinking.jpg';
 import PostCard from '../components/post/card/PostCard';
 import PostCreate from '../components/post/create/PostCreate';
 import PostSkeletons from '../components/post/skeletons/PostSkeletons';
 import constants from '../config/constants';
 import { Auth } from '../providers/AuthProvider';
-import endpage from '../assets/images/endpage.jpg'
 
 export default function Home() {
-	const [loading, setLoading] = useState(true)
+	const router = useRouter()
 	const [showModal, setShowModal] = useState(false)
 	const [current, setCurrent] = useState(-1)
 	const [posts, setPosts] = useState([])
@@ -30,7 +31,6 @@ export default function Home() {
 				if (!data.success)
 					return toast.error(data.message)
 				setPosts(prev => [...prev, ...data.data])
-				setLoading(false)
 				setEnd(!data.data.length)
 			})
 			.catch(error => toast.error(error.toString()))
@@ -66,7 +66,13 @@ export default function Home() {
 						>
 							Tạo bài viết
 						</Button>
-					</VStack> : user.login && <PostCreate onCreate={() => setShowModal(false)} />
+					</VStack> : user.login && <PostCreate
+						onCreate={(post) => {
+							setShowModal(false)
+							router.push(`/post/${post.slug}`)
+						}}
+						onCancel={() => setShowModal(false)}
+					/>
 				}
 				{
 					!user.login && <Input

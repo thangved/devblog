@@ -9,7 +9,7 @@ import constants from '../../../config/constants';
 import { toast } from 'react-hot-toast';
 import { useFormik } from "formik";
 
-export default function PostCreate({ update, post, onCreate = Function }) {
+export default function PostCreate({ update, post, onCreate = Function, onCancel = Function }) {
     const { token } = useContext(Auth)
     const [topics, setTopics] = useState(post?.topics || [])
 
@@ -33,7 +33,7 @@ export default function PostCreate({ update, post, onCreate = Function }) {
                     return toast.error(data.message)
 
                 toast.success(message)
-                onCreate()
+                onCreate(data.data)
             }
             catch (error) {
                 toast.error(error.toString())
@@ -114,6 +114,14 @@ export default function PostCreate({ update, post, onCreate = Function }) {
             {
                 update ? 'Lưu' : 'Tạo'
             }
+        </Button>
+
+        <Button
+            mr="4"
+            mb="4"
+            onClick={onCancel}
+        >
+            Hủy
         </Button>
 
 
