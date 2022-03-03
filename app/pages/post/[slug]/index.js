@@ -1,8 +1,9 @@
-import { Avatar, Badge, Box, Container, Divider, Flex, Heading, Link, Spacer, Stack, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Container, Divider, Flex, Heading, HStack, Link, Spacer, Text, VStack } from "@chakra-ui/react";
 import axios from "axios";
 import moment from "moment";
 import 'moment/locale/vi';
 import Head from "next/head";
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import Markdown from '../../../components/markdown/Markdown';
@@ -10,7 +11,6 @@ import PostCard from '../../../components/post/card/PostCard';
 import PostSkeletons from '../../../components/post/skeletons/PostSkeletons';
 import PostTools from "../../../components/post/tools/PostTools";
 import constants from '../../../config/constants';
-import { useRouter } from 'next/router';
 
 
 export async function getServerSideProps(context) {
@@ -73,7 +73,7 @@ export default function Post({ post }) {
             Sửa đổi lần cuối {moment(post.updatedAt).fromNow()}
         </Text>
 
-        <Stack direction="row">
+        <HStack wrap="wrap">
             {post.topics?.map(topic => (<Link
                 href={`/topic/${topic}`}
                 key={topic}>
@@ -85,7 +85,7 @@ export default function Post({ post }) {
                     </Badge>
                 </a>
             </Link>))}
-        </Stack>
+        </HStack>
 
         <Flex padding="20px 0">
             <Avatar name={post.author?.fullName} />

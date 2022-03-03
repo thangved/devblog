@@ -40,7 +40,7 @@ export default function PostCard({ post, highlight, disabled }) {
             Tạo vào {moment(post.createdAt).calendar()} (Sửa đổi lần cuối {moment(post.updatedAt).fromNow()})
         </Text>
 
-        <HStack padding="10px 0">
+        <HStack padding="10px 0" wrap="wrap">
             {
                 post.topics.map(topic => (<Link key={topic} href={`/topic/${topic}`}>
                     <a>
