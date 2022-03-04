@@ -31,6 +31,8 @@
     "rehype-katex": "^6.0.2",
     "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1",
+    "remark-html": "^15.0.1",
+    "remark-lint": "^9.1.1",
     "remark-math": "^5.1.1",
     "sass": "^1.49.9",
     "yarn": "^1.22.17"
