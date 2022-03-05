@@ -1,8 +1,8 @@
-import { CopyIcon } from '@chakra-ui/icons';
+import { AddIcon, CopyIcon } from '@chakra-ui/icons';
 import { Center, HStack, IconButton, Modal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/react';
 import { createContext, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { FacebookMessengerShareButton, FacebookShareButton, LinkedinShareButton, TwitterShareButton } from 'react-share';
+import { FacebookShareButton, LinkedinShareButton, TwitterShareButton } from 'react-share';
 import { SocialIcon } from 'react-social-icons';
 
 export const Share = createContext({
@@ -46,10 +46,6 @@ export default function ShareProvider({ children }) {
                                     <SocialIcon url="https://facebook.com" />
                                 </FacebookShareButton>
 
-                                <FacebookMessengerShareButton url={url}>
-                                    <SocialIcon url="" />
-                                </FacebookMessengerShareButton>
-
                                 <TwitterShareButton
                                     url={url}
                                     hashtags={['devBlog']}
@@ -72,6 +68,25 @@ export default function ShareProvider({ children }) {
                                     }}
                                 >
                                     <CopyIcon />
+                                </IconButton>
+
+                                <IconButton
+                                    borderRadius="full"
+                                    size="lg"
+                                    onClick={async () => {
+                                        try {
+                                            const value = navigator.share({
+                                                title: quote,
+                                                url,
+                                                text: quote,
+                                            })
+                                            toast.success(value.toString())
+                                        }
+                                        catch (error) {
+                                            toast.error(error.toString())
+                                        }
+                                    }}>
+                                    <AddIcon />
                                 </IconButton>
 
                             </HStack>
