@@ -15,7 +15,6 @@ export default function ShareProvider({ children }) {
     const [quote, setQuote] = useState('')
 
     const openShare = (url, quote) => {
-        console.log(url)
         setUrl(url || document.URL)
         setOpen(true)
         setQuote(quote)
