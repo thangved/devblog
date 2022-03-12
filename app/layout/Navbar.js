@@ -1,4 +1,4 @@
-import { HamburgerIcon, SettingsIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, LinkIcon, SettingsIcon } from "@chakra-ui/icons";
 import { Avatar, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Wrap, WrapItem } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from 'next/router';
@@ -43,6 +43,15 @@ export default function Navbar() {
                     <ModalBody>
 
                         <Stack>
+                            <Link href="/l">
+                                <a>
+                                    <Button
+                                        leftIcon={<LinkIcon />}
+                                        isFullWidth>
+                                        Link shorter
+                                    </Button>
+                                </a>
+                            </Link>
                             <Button leftIcon={<SettingsIcon />} isFullWidth>
                                 Cài đặt
                             </Button>

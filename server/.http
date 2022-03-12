@@ -1,24 +1,46 @@
-# POST http://localhost:5000/user/create
-# Content-Type: application/json
+POST http://localhost:5000/user/create
+Content-Type: application/json
 
-# {
-#     "fullName": "Kim Minh Thang",
-#     "username": "thangve",
-#     "password": "1234",
-#     "confirmPassword": "1234"
-# }
+{
+    "fullName": "Kim Minh Thang",
+    "username": "thangve",
+    "password": "1234",
+    "confirmPassword": "1234"
+}
 
-# POST http://localhost:5000/user/login
-# Content-Type: application/json
+###
 
-# {
-#     "username": "thangved",
-#     "password": "1234"
-# }
+POST http://localhost:5000/user/login
+Content-Type: application/json
+
+{
+    "username": "thangved",
+    "password": "ammm#2kk2"
+}
+
+###
 
 POST http://localhost:5000/user/auth
 Content-Type: application/json
 
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnZW5kZXIiOjAsIl9pZCI6IjYyMWRkMDRjYWJhYWVjM2Y3MmEwN2YxZiIsImZ1bGxOYW1lIjoiS2ltIE1pbmggVGhhbmciLCJ1c2VybmFtZSI6InRoYW5ndmVkIiwicGFzc3dvcmQiOiIkYXJnb24yaSR2PTE5JG09NDA5Nix0PTMscD0xJFpzdC84dk9BOHFqT3lCUUlsdVJ5WVEkUm1CK01WaWNJS0pSeE9obkxLdTExbXNCT0FzejUyazFoNVBwR2FabWlyQSIsImNyZWF0ZWRBdCI6MTY0NjEyMTAyMjI5NiwidXBkYXRlZEF0IjoxNjQ2MTIxMDIyMjk2LCJfX3YiOjAsImlhdCI6MTY0NjEzMDk0OH0.HBuQcuJR2NX7vdixcKr9v2SZT4AFeQtDFIhrA8E2kvY"
+}
+
+###
+POST http://localhost:5000/url/create
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFmNjI2NmVmNzE3NjIyMWE2ODQwMDQiLCJmdWxsTmFtZSI6IktpbSBNaW5oIFRo4bqvbmciLCJ1c2VybmFtZSI6InRoYW5ndmVkIiwicGFzc3dvcmQiOiIkYXJnb24yaSR2PTE5JG09NDA5Nix0PTMscD0xJGxsYnJhZy85cWNpWlg3K2NlMmh6eEEkNU5nQlB5ZFJiaFMrQkZ4WnRWY2pNWUl5WWhpeWZaamQvMit0dUE2bEdzYyIsImdlbmRlciI6MCwiY3JlYXRlZEF0IjoxNjQ2MjIzNzg0NzU1LCJ1cGRhdGVkQXQiOjE2NDYyMjM3ODQ3NTUsIl9fdiI6MCwiaWF0IjoxNjQ2OTgyMjY2fQ.0kd8hzqhqu83RwtlltPba8wdR_fBioC7VyzIkK8oLVk",
+    "title": "Hello",
+    "url": "https://fb.com"
+}
+
+###
+POST http://localhost:5000/url/my-links
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFmNjI2NmVmNzE3NjIyMWE2ODQwMDQiLCJmdWxsTmFtZSI6IktpbSBNaW5oIFRo4bqvbmciLCJ1c2VybmFtZSI6InRoYW5ndmVkIiwicGFzc3dvcmQiOiIkYXJnb24yaSR2PTE5JG09NDA5Nix0PTMscD0xJGxsYnJhZy85cWNpWlg3K2NlMmh6eEEkNU5nQlB5ZFJiaFMrQkZ4WnRWY2pNWUl5WWhpeWZaamQvMit0dUE2bEdzYyIsImdlbmRlciI6MCwiY3JlYXRlZEF0IjoxNjQ2MjIzNzg0NzU1LCJ1cGRhdGVkQXQiOjE2NDYyMjM3ODQ3NTUsIl9fdiI6MCwiaWF0IjoxNjQ3MDEwMzY4fQ.-DkHdLJdKFnE8auhYZpXI93UmfAM2BGmgGOHLcSLMc8"
 }

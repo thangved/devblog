@@ -9,6 +9,7 @@ import constants from '../../../config/constants';
 import { Alert } from '../../../providers/AlertProvider';
 import { Auth } from '../../../providers/AuthProvider';
 import { Share } from '../../../providers/ShareProvider';
+import getDomain from '../../../utils/getDomain';
 
 export default function PostTools({ post, onRemove = () => { } }) {
     const { user, token } = useContext(Auth)
@@ -93,7 +94,7 @@ export default function PostTools({ post, onRemove = () => { } }) {
             }
             <MenuItem
                 icon={<LinkIcon />}
-                onClick={() => openShare(`${document.URL.split('/')[0]}//${document.URL.split('/')[2]}/post/${post.slug}`, post.title)}
+                onClick={() => openShare(`${getDomain()}/post/${post.slug}`, post.title)}
             >
                 Chia sẻ
             </MenuItem>
