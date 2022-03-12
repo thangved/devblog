@@ -19,7 +19,7 @@ const CreateLink = ({ setMyLinks }) => {
     })
 
     const onSubmit = async () => {
-        if (!token || token.length) {
+        if (!token || !token.length) {
             toast.error('Vui lòng đăng nhập để dùng tính năng này')
             return router.push('/auth/login')
         }
