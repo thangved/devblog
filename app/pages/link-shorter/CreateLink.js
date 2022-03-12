@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Image, Input, InputGroup, InputLeftAddon, Skeleton, Stack, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Container, Heading, Image, Input, InputGroup, InputLeftAddon, Skeleton, Stack, Text, VStack } from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -53,51 +53,53 @@ const CreateLink = ({ setMyLinks }) => {
     }
 
     return (
-        <VStack pt="2" pb="2">
-            <InputGroup>
-                <InputLeftAddon>
-                    https://
-                </InputLeftAddon>
-                <Input
-                    placeholder="Nhập link cần rút gọn"
-                    onChange={event => {
-                        setUrl(event.target.value)
-                        clearTimeout(setTimeout(() => getPreview(event.target.value), 2000) - 1)
-                    }} />
-            </InputGroup>
-            {
-                preview.show ? <Box
-                    width="100%"
-                    border="1px solid #ddd">
-                    {
-                        preview.img && <Image
-                            width="100%"
-                            src={preview.img}
-                            alt={preview.title}
-                            onError={() => setPreview(prev => ({ ...prev, img: null }))}
-                        />
-                    }
-                    <Box p="2" backgroundColor="gray.100">
-                        <Heading size="sm">
-                            {preview.title || preview.description}
-                        </Heading>
-                        <Text>
-                            {preview.description || preview.title}
-                        </Text>
-                    </Box>
-                </Box> : <Stack width="100%">
-                    <Skeleton height="150px" width="100%" />
-                    <Skeleton height="50px" width="100%" />
-                </Stack>
-            }
-            <Button
-                colorScheme="blue"
-                isFullWidth
-                onClick={onSubmit}
-            >
-                Tạo
-            </Button>
-        </VStack>
+        <Container p="0">
+            <VStack pt="2" pb="2" m="0">
+                <InputGroup>
+                    <InputLeftAddon>
+                        https://
+                    </InputLeftAddon>
+                    <Input
+                        placeholder="Nhập link cần rút gọn"
+                        onChange={event => {
+                            setUrl(event.target.value)
+                            clearTimeout(setTimeout(() => getPreview(event.target.value), 2000) - 1)
+                        }} />
+                </InputGroup>
+                {
+                    preview.show ? <Box
+                        width="100%"
+                        border="1px solid #ddd">
+                        {
+                            preview.img && <Image
+                                width="100%"
+                                src={preview.img}
+                                alt={preview.title}
+                                onError={() => setPreview(prev => ({ ...prev, img: null }))}
+                            />
+                        }
+                        <Box p="2" backgroundColor="gray.100">
+                            <Heading size="sm">
+                                {preview.title || preview.description}
+                            </Heading>
+                            <Text>
+                                {preview.description || preview.title}
+                            </Text>
+                        </Box>
+                    </Box> : <Stack width="100%">
+                        <Skeleton height="150px" width="100%" />
+                        <Skeleton height="50px" width="100%" />
+                    </Stack>
+                }
+                <Button
+                    colorScheme="blue"
+                    isFullWidth
+                    onClick={onSubmit}
+                >
+                    Tạo
+                </Button>
+            </VStack>
+        </Container>
     )
 }
 

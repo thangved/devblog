@@ -33,7 +33,7 @@ export default function LinkShorter() {
     }, [token])
 
 
-    return <Container maxW="lg">
+    return <Container maxW="xxl">
         <Head>
             <title>
                 Link Shorter
