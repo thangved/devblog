@@ -45,7 +45,7 @@ const Links = ({ myLinks, setMyLinks }) => {
                 </Tr>
             </Thead>
             <Tbody>
-                {myLinks.map((myLink, i) => (
+                {myLinks?.map((myLink, i) => (
                     <Tr key={myLink._id}>
                         <Td>
                             {++i}
@@ -75,7 +75,7 @@ const Links = ({ myLinks, setMyLinks }) => {
                         <Td>
                             <HStack>
 
-                                <IconButton onClick={()=>{
+                                <IconButton onClick={() => {
                                     openShare(`${getDomain()}/l/${myLink.slug}`, myLink.title)
                                 }}>
                                     <LinkIcon />
