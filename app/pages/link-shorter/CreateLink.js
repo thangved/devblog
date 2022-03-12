@@ -4,9 +4,11 @@ import { useContext, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import constants from '../../config/constants';
 import { Auth } from '../../providers/AuthProvider';
+import { useRouter } from 'next/router';
 
 const CreateLink = ({ setMyLinks }) => {
     const { token } = useContext(Auth)
+    const router = useRouter()
 
     const [url, setUrl] = useState('')
     const [preview, setPreview] = useState({
@@ -17,6 +19,10 @@ const CreateLink = ({ setMyLinks }) => {
     })
 
     const onSubmit = async () => {
+        if (!token || token.length) {
+            toast.error('Vui lòng đăng nhập để dùng tính năng này')
+            return router.push('/auth/login')
+        }
         try {
             const res = await axios.post(`${constants.api}/url/create`, {
                 url,
