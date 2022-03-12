@@ -1,58 +1,79 @@
-import { Center, Container, Heading, Stat, StatLabel, StatNumber } from '@chakra-ui/react';
+import { Box, Container, Heading, Image, Spinner, Stat, StatLabel, StatNumber, Text } from '@chakra-ui/react';
 import axios from 'axios';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Countdown from 'react-countdown';
-import { toast } from 'react-hot-toast';
 import constants from '../../../config/constants';
 
-const LinkRedirect = () => {
+export async function getServerSideProps(context) {
+    try {
+        const { slug } = context.query
 
-    const router = useRouter()
+        const res = await axios.get(`${constants.api}/url/convert/${slug}`)
+        const info = await (await axios.get(`${constants.api}/url/info?url=${res.data.data.url}`)).data.data
 
-    useEffect(() => {
-        if (!router.query.slug)
-            return
-        const redirect = async () => {
-            try {
-                const res = await axios.get(`${constants.api}/url/convert/${router.query.slug}`)
-                if (!res.data.success)
-                    return toast.error(data.message)
-
-                setTimeout(() => {
-                    window.location = res.data.data.url
-                }, 3000)
-            } catch (error) {
-                toast.error(error.toString())
+        return {
+            props: {
+                data: {
+                    ...res.data.data,
+                    info
+                }
             }
         }
-        redirect()
-    }, [router.query])
+
+    }
+    catch (error) {
+        return {
+            props: {
+                data: null
+            }
+        }
+    }
+}
+
+const LinkRedirect = ({ data }) => {
+    const t = 5000
+    useEffect(() => {
+        setTimeout(() => window.location = data.url, t)
+    }, [data.url])
 
     return (
         <Container>
             <Head>
                 <title>
-                    Đang chuyển hướng...
+                    Chuyển hướng {'->'} {data.title}
                 </title>
             </Head>
 
+            <Box w="100%" border="1px solid #ddd" mt="2">
+                <Image
+                    w="100%"
+                    src={data.info.img}
+                    alt={data.title} />
+
+                <Box p="2" background="gray.100" borderTop="1px solid #ddd">
+                    <Heading size="sm">
+                        {data.title || data.description}
+                    </Heading>
+                    <Text>
+                        {data.description || data.title}
+                    </Text>
+                </Box>
+            </Box>
+
             <Countdown
-                date={Date.now() + 3000}
+                date={Date.now() + t}
                 renderer={({ seconds, completed }) => {
-                    return completed ? <Heading size="sm">
-                        Đang chuyển hướng...
-                    </Heading> : <Center>
-                        <Stat>
-                            <StatLabel>
-                                Chuyển hướng sau
-                            </StatLabel>
-                            <StatNumber>
-                                {seconds} giây
-                            </StatNumber>
-                        </Stat>
-                    </Center>
+                    return completed ? <Heading mt="2" size="sm">
+                        Đang chuyển hướng...<Spinner size="sm" />
+                    </Heading> : <Stat mt="2">
+                        <StatLabel>
+                            Chuyển hướng sau
+                        </StatLabel>
+                        <StatNumber>
+                            {seconds} giây
+                        </StatNumber>
+                    </Stat>
                 }}
             />
         </Container>
