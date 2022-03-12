@@ -45,6 +45,7 @@ const Links = ({ myLinks, setMyLinks }) => {
                         <Th>Link gốc</Th>
                         <Th>Link rút gọn</Th>
                         <Th>Tiêu đề</Th>
+                        <Th>Views</Th>
                         <Th>Actions</Th>
                     </Tr>
                 </Thead>
@@ -75,6 +76,9 @@ const Links = ({ myLinks, setMyLinks }) => {
                             </Td>
                             <Td>
                                 {myLink.title}
+                            </Td>
+                            <Td>
+                                {myLink.count || 0}
                             </Td>
                             <Td>
                                 <HStack>

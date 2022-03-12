@@ -124,6 +124,8 @@ class UrlController {
                     message: 'Khong ton tai url',
                 })
 
+            await ModelUrl.findByIdAndUpdate(url._id, { count: url.count + 1 })
+
             res.send({
                 success: true,
                 data: {

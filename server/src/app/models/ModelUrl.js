@@ -22,6 +22,10 @@ const ModelUrl = new mongoose.Schema({
         ref: 'users',
         required: true,
     },
+    count: {
+        type: Number,
+        default: 0,
+    },
     createdAt: {
         type: Number,
         default: Date.now(),
