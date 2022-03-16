@@ -4,7 +4,7 @@ import moment from "moment";
 import { BsGithub } from "react-icons/bs";
 import Markdown from "../../components/markdown/Markdown";
 
-const Comment = ({ data }) => {
+const Comment = ({ data = { user: {} } }) => {
 	const { user } = data;
 	return (
 		<Box

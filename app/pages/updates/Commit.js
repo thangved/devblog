@@ -3,7 +3,7 @@ import { Avatar, Box, Flex, IconButton, Text, Tooltip } from "@chakra-ui/react";
 import moment from "moment";
 import { BsGithub } from "react-icons/bs";
 
-const Commit = ({ data }) => {
+const Commit = ({ data = { author: {}, commit: {} } }) => {
 	const { author, commit } = data;
 	return (
 		<Box
@@ -27,14 +27,14 @@ const Commit = ({ data }) => {
 					</a>
 				</Tooltip>
 			</Flex>
-			<Tooltip label={moment(commit.author.date).fromNow()}>
+			<Tooltip label={moment(commit.author?.date).fromNow()}>
 				<Text
 					fontSize="sm"
 					fontWeight="thin"
 					mt="2"
 					width="fit-content"
 				>
-					{moment(commit.author.date).calendar()}
+					{moment(commit.author?.date).calendar()}
 				</Text>
 			</Tooltip>
 			<Flex alignItems="center">
