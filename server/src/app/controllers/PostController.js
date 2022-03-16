@@ -103,16 +103,13 @@ class PostController {
 			});
 
 		const posts = await ModelPost.find({ author: user._id }).populate(
-			"author"
+			"author",
+			["username", "fullName"]
 		);
 		res.send({
 			success: true,
 			data: posts.map((post) => ({
 				...post.toObject(),
-				author: {
-					...post.toObject().author,
-					password: false,
-				},
 			})),
 		});
 	}
@@ -130,16 +127,13 @@ class PostController {
 			});
 
 		const posts = await ModelPost.find({ topics: topic }).populate(
-			"author"
+			"author",
+			["username", "fullName"]
 		);
 		res.send({
 			success: true,
 			data: posts.map((post) => ({
 				...post.toObject(),
-				author: {
-					...post.toObject().author,
-					password: false,
-				},
 			})),
 		});
 	}
@@ -158,22 +152,20 @@ class PostController {
 
 		try {
 			const user = await ModelUser.findOne({ username });
+
 			if (!user)
 				return res.send({
 					success: false,
 					message: "Không tìm thấy người dùng",
 				});
-			const posts = await ModelPost.find({ author: user._id }).populate(
-				"author"
-			);
+			const posts = await ModelPost.find({
+				author: user._id,
+				public: true,
+			}).populate("author", ["username", "fullName"]);
 			res.send({
 				success: true,
 				data: posts.map((post) => ({
 					...post.toObject(),
-					author: {
-						...post.toObject().author,
-						password: false,
-					},
 				})),
 			});
 		} catch (error) {
@@ -197,20 +189,20 @@ class PostController {
 				message: "Vui lòng nhập slug",
 			});
 
-		const post = await ModelPost.findOne({ slug }).populate("author");
+		const post = await ModelPost.findOne({ slug, public: true })
+			.populate("author", ["username", "fullName"])
+			.populate("likes", ["username", "fullName"]);
+
 		if (!post)
 			return res.send({
 				success: false,
 				message: "Không tìm thấy bài viết",
 			});
+		await ModelPost.findOneAndUpdate({ slug }, { views: post.views + 1 });
 		res.send({
 			success: true,
 			data: {
 				...post.toObject(),
-				author: {
-					...post.toObject().author,
-					password: false,
-				},
 			},
 		});
 	}
@@ -228,7 +220,10 @@ class PostController {
 				message: "Vui lòng nhập id",
 			});
 
-		const post = await ModelPost.findById(_id).populate("author");
+		const post = await ModelPost.findById(_id).populate("author", [
+			"username",
+			"fullName",
+		]);
 		if (!post)
 			return res.send({
 				success: false,
@@ -238,10 +233,6 @@ class PostController {
 			success: true,
 			data: {
 				...post.toObject(),
-				author: {
-					...post.toObject().author,
-					password: false,
-				},
 			},
 		});
 	}
@@ -294,8 +285,8 @@ class PostController {
 	async all(req, res) {
 		const { page, limit } = req.query;
 		try {
-			const posts = await ModelPost.find({})
-				.populate("author")
+			const posts = await ModelPost.find({ public: true })
+				.populate("author", ["username", "fullName"])
 				.limit(limit)
 				.skip(limit * page)
 				.sort({ _id: -1 });
@@ -303,11 +294,39 @@ class PostController {
 				success: true,
 				data: posts.map((post) => ({
 					...post.toObject(),
-					author: {
-						...post.toObject().author,
-						password: false,
-					},
 				})),
+			});
+		} catch (error) {
+			res.send({
+				success: false,
+				message: error.toString(),
+			});
+		}
+	}
+	/**
+	 *
+	 * @param {request} req
+	 * @param {response} res
+	 */
+	async like(req, res) {
+		const { token, postId } = req.body;
+
+		try {
+			let isLike = true;
+			const user = Token.resolve(token);
+			const post = await ModelPost.findOne({ _id: postId, public: true });
+			let { likes } = post;
+
+			if (!likes.includes(user._id)) likes = [...likes, user._id];
+			else {
+				isLike = false;
+				likes = [...likes.filter((e) => e !== user._id)];
+			}
+
+			await ModelPost.findByIdAndUpdate(postId, { likes });
+			res.send({
+				success: true,
+				message: isLike ? "Đã like" : "Đã bỏ like",
 			});
 		} catch (error) {
 			res.send({

@@ -29,7 +29,11 @@ export default function Weather() {
 		>
 			<Stat>
 				<StatLabel>Thời tiết</StatLabel>
-				<StatNumber>{currentWeather.weather[0].description}</StatNumber>
+				<StatNumber>
+					{`${
+						currentWeather.weather[0].description?.toUpperCase()[0]
+					}${currentWeather.weather[0].description?.slice(1)}`}
+				</StatNumber>
 			</Stat>
 
 			<Stat>

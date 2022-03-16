@@ -7,8 +7,8 @@ route.post("/create", PostController.create);
 route.post("/me", PostController.myPosts);
 
 route.post("/remove", PostController.remove);
-
 route.post("/update", PostController.update);
+route.post("/like", PostController.like);
 
 route.get("/topic/:topic", PostController.topic);
 route.get("/user/:username", PostController.user);

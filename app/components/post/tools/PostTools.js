@@ -12,6 +12,7 @@ import {
 	MenuButton,
 	MenuItem,
 	MenuList,
+	Tooltip,
 } from "@chakra-ui/react";
 import axios from "axios";
 import Link from "next/link";
@@ -70,7 +71,9 @@ export default function PostTools({ post, onRemove = () => {} }) {
 	};
 	return (
 		<Menu>
-			<MenuButton as={IconButton} icon={<ChevronDownIcon />} />
+			<Tooltip label="Xem một số tùy chọn">
+				<MenuButton as={IconButton} icon={<ChevronDownIcon />} />
+			</Tooltip>
 			<MenuList>
 				{user._id === post.author?._id && (
 					<MenuItem

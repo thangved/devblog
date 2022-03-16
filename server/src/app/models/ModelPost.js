@@ -36,6 +36,19 @@ const ModelPost = new mongoose.Schema({
 		default: false,
 		required: true,
 	},
+	views: {
+		type: Number,
+		default: 0,
+	},
+	likes: {
+		type: [String],
+		default: [],
+		ref: "users",
+	},
+	public: {
+		type: Boolean,
+		default: false,
+	},
 	createdAt: {
 		type: Number,
 		default: Date.now(),

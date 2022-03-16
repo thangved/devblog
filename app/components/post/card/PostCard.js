@@ -1,11 +1,14 @@
+import { LockIcon } from "@chakra-ui/icons";
 import {
 	Avatar,
 	Badge,
 	Box,
+	Flex,
 	Heading,
 	HStack,
 	Image,
 	Text,
+	Tooltip,
 } from "@chakra-ui/react";
 import moment from "moment";
 import Link from "next/link";
@@ -61,10 +64,21 @@ export default function PostCard({ post, highlight, disabled }) {
 			<Heading size="sm" marginBottom="2">
 				{post.title}
 			</Heading>
-			<Text>
-				Tạo vào {moment(post.createdAt).calendar()} (Sửa đổi lần cuối{" "}
-				{moment(post.updatedAt).fromNow()})
-			</Text>
+
+			<Flex>
+				<Text fontSize="sm" flex="1">
+					{`Tạo vào ${moment(
+						post.createdAt
+					).calendar()} (Sửa đổi lần cuối ${moment(
+						post.updatedAt
+					).fromNow()})`}
+				</Text>
+				{!post?.public && (
+					<Tooltip label="Không cồng khai">
+						<LockIcon />
+					</Tooltip>
+				)}
+			</Flex>
 
 			<HStack padding="10px 0" wrap="wrap">
 				{post.topics.map((topic) => (

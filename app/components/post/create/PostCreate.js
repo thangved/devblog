@@ -4,10 +4,7 @@ import {
 	FormControl,
 	FormLabel,
 	Input,
-	Popover,
-	PopoverBody,
-	PopoverContent,
-	PopoverTrigger,
+	Switch,
 	Tab,
 	TabList,
 	TabPanel,
@@ -33,6 +30,7 @@ export default function PostCreate({
 }) {
 	const { token } = useContext(Auth);
 	const [topics, setTopics] = useState(post?.topics || []);
+	const [isPublic, setIsPublic] = useState(post?.public);
 
 	const formik = useFormik({
 		initialValues: {
@@ -49,6 +47,7 @@ export default function PostCreate({
 						token,
 						topics,
 						postId: post?._id,
+						public: isPublic,
 					})
 				).data;
 
@@ -80,6 +79,7 @@ export default function PostCreate({
 								id="title"
 								placeholder="Nhập tiêu đề"
 								onChange={formik.handleChange}
+								size="lg"
 							/>
 						</FormControl>
 						<FormControl>
@@ -106,6 +106,15 @@ export default function PostCreate({
 								value={topics}
 								placeHolder="Thêm chủ đề"
 								onChange={setTopics}
+							/>
+						</FormControl>
+						<FormControl>
+							<FormLabel>Công khai?</FormLabel>
+							<Switch
+								isChecked={isPublic}
+								onChange={(event) =>
+									setIsPublic(event.target.checked)
+								}
 							/>
 						</FormControl>
 					</form>
