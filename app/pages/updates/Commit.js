@@ -16,11 +16,13 @@ const Commit = ({ data = { author: {}, commit: {} } }) => {
 		>
 			<Flex justifyContent="flex-start" alignItems="center" pr="2">
 				<Avatar src={author.avatar_url} size="sm" />
-				<a href={author.html_url} target="_blank" rel="noreferrer">
-					<Text flex="1" fontSize="sm" fontWeight="bold" ml="2">
-						{author.login}
-					</Text>
-				</a>
+				<Box flex="1">
+					<a href={author.html_url} target="_blank" rel="noreferrer">
+						<Text flex="1" fontSize="sm" fontWeight="bold" ml="2">
+							{author.login}
+						</Text>
+					</a>
+				</Box>
 				<Tooltip mr="2" label="Xem trên Github">
 					<a href={data.html_url} target="_blank" rel="noreferrer">
 						<IconButton icon={<BsGithub />} />
