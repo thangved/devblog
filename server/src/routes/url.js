@@ -1,13 +1,13 @@
-const express = require('express')
-const UrlController = require('../app/controllers/UrlController')
+const express = require("express");
+const UrlController = require("../app/controllers/UrlController");
 
-const route = express.Router()
+const route = express.Router();
 
-route.post('/create', UrlController.create)
-route.post('/my-links', UrlController.myLinks)
-route.post('/remove', UrlController.remove)
+route.post("/create", UrlController.create);
+route.post("/my-links", UrlController.myLinks);
+route.post("/remove", UrlController.remove);
 
-route.get('/info', UrlController.info)
-route.get('/convert/:slug', UrlController.convert)
+route.get("/info", UrlController.info);
+route.get("/convert/:slug", UrlController.convert);
 
-module.exports = route
+module.exports = route;

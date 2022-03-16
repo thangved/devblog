@@ -1,17 +1,14 @@
-import React from 'react'
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import React from "react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const LinkRedirect = () => {
-    const router = useRouter()
+	const router = useRouter();
 
+	useEffect(() => {
+		router.push("/link-shorter");
+	}, [router]);
+	return <div></div>;
+};
 
-    useEffect(() => {
-        router.push('/link-shorter')
-    }, [router])
-    return (
-        <div></div>
-    )
-}
-
-export default LinkRedirect
+export default LinkRedirect;

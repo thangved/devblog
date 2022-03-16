@@ -1,14 +1,14 @@
-const express = require('express')
-const path = require('path')
+const express = require("express");
+const path = require("path");
 
-const route = express.Router()
+const route = express.Router();
 
-route.use('/user', require('./user'))
-route.use('/post', require('./post'))
-route.use('/url', require('./url'))
+route.use("/user", require("./user"));
+route.use("/post", require("./post"));
+route.use("/url", require("./url"));
 
-route.use('/*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../resources/index.html'))
-})
+route.use("/*", (req, res) => {
+	res.sendFile(path.resolve(__dirname, "../resources/index.html"));
+});
 
-module.exports = route
+module.exports = route;

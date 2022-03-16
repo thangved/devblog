@@ -5,15 +5,15 @@ import LocationProvider from "./LocationProvider";
 import ShareProvider from "./ShareProvider";
 
 export default function Providers({ children }) {
-    return <ChakraProvider>
-        <AuthProvider>
-            <AlertProvider>
-                <ShareProvider>
-                    <LocationProvider>
-                        {children}
-                    </LocationProvider>
-                </ShareProvider>
-            </AlertProvider>
-        </AuthProvider>
-    </ChakraProvider>
+	return (
+		<ChakraProvider>
+			<AuthProvider>
+				<AlertProvider>
+					<ShareProvider>
+						<LocationProvider>{children}</LocationProvider>
+					</ShareProvider>
+				</AlertProvider>
+			</AuthProvider>
+		</ChakraProvider>
+	);
 }

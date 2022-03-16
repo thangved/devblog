@@ -1,5 +1,5 @@
-import styles from './Logo.module.scss'
+import styles from "./Logo.module.scss";
 
 export default function Logo() {
-    return <div className={styles.wrapper} />
+	return <div className={styles.wrapper} />;
 }

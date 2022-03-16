@@ -1,86 +1,76 @@
-import { AddIcon } from '@chakra-ui/icons';
-import { Box, Button, Container, Image, Input, VStack } from '@chakra-ui/react';
-import axios from 'axios';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
-import ScrollTrigger from 'react-scroll-trigger';
-import endpage from '../assets/images/endpage.jpg';
-import thinking from '../assets/images/thinking.jpg';
-import PostCard from '../components/post/card/PostCard';
-import PostCreate from '../components/post/create/PostCreate';
-import PostSkeletons from '../components/post/skeletons/PostSkeletons';
-import Weather from '../components/weather/Weather';
-import constants from '../config/constants';
-import { Auth } from '../providers/AuthProvider';
+import { AddIcon } from "@chakra-ui/icons";
+import { Box, Button, Container, Image, Input, VStack } from "@chakra-ui/react";
+import axios from "axios";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import ScrollTrigger from "react-scroll-trigger";
+import endpage from "../assets/images/endpage.jpg";
+import thinking from "../assets/images/thinking.jpg";
+import PostCard from "../components/post/card/PostCard";
+import PostCreate from "../components/post/create/PostCreate";
+import PostSkeletons from "../components/post/skeletons/PostSkeletons";
+import Weather from "../components/weather/Weather";
+import constants from "../config/constants";
+import { Auth } from "../providers/AuthProvider";
 
 export async function getServerSideProps(context) {
 	try {
-
-		const data = (await axios.get(`${constants.api}/post/all?page=0&limit=5`)).data
+		const data = (
+			await axios.get(`${constants.api}/post/all?page=0&limit=5`)
+		).data;
 
 		return {
 			props: {
-				innitPosts: data.data || []
+				innitPosts: data.data || [],
 			},
-		}
-	}
-	catch (error) {
+		};
+	} catch (error) {
 		return {
 			props: {
-				innitPosts: []
-			}
-		}
+				innitPosts: [],
+			},
+		};
 	}
 }
 
 export default function Home({ innitPosts }) {
-	const router = useRouter()
-	const [showModal, setShowModal] = useState(false)
-	const [current, setCurrent] = useState(0)
-	const [posts, setPosts] = useState(innitPosts)
-	const [end, setEnd] = useState(false)
+	const router = useRouter();
+	const [showModal, setShowModal] = useState(false);
+	const [current, setCurrent] = useState(0);
+	const [posts, setPosts] = useState(innitPosts);
+	const [end, setEnd] = useState(false);
 
-	const { user } = useContext(Auth)
+	const { user } = useContext(Auth);
 
 	useEffect(() => {
-		if (!current || end)
-			return
-		axios.get(`${constants.api}/post/all?page=${current}&limit=5`)
+		if (!current || end) return;
+		axios
+			.get(`${constants.api}/post/all?page=${current}&limit=5`)
 			.then(({ data }) => {
-				if (!data.success)
-					return toast.error(data.message)
-				setPosts(prev => [...prev, ...data.data])
-				setEnd(!data.data.length)
+				if (!data.success) return toast.error(data.message);
+				setPosts((prev) => [...prev, ...data.data]);
+				setEnd(!data.data.length);
 			})
-			.catch(error => toast.error(error.toString()))
-	}, [current, end])
+			.catch((error) => toast.error(error.toString()));
+	}, [current, end]);
 
 	return (
 		<Container
 			paddingTop={2}
-			maxW={showModal ? 'container.md' : 'container.sm'}
+			maxW={showModal ? "container.md" : "container.sm"}
 			transition=".4s ease"
 		>
 			<Weather />
 			<Head>
 				<title>Trang chủ</title>
 			</Head>
-			<Box
-				border="1px solid #ddd"
-				borderRadius="10"
-				overflow="hidden"
-			>
+			<Box border="1px solid #ddd" borderRadius="10" overflow="hidden">
 				<Image src={thinking.src} alt="thinking" />
-				{
-					!showModal && user.login ? <VStack
-						padding={2}
-						onClick={setShowModal}
-					>
-						<Input
-							placeholder="Bạn đang nghĩ gì?"
-							readOnly />
+				{!showModal && user.login ? (
+					<VStack padding={2} onClick={setShowModal}>
+						<Input placeholder="Bạn đang nghĩ gì?" readOnly />
 						<Button
 							isFullWidth
 							colorScheme="blue"
@@ -88,33 +78,39 @@ export default function Home({ innitPosts }) {
 						>
 							Tạo bài viết
 						</Button>
-					</VStack> : user.login && <PostCreate
-						onCreate={(post) => {
-							setShowModal(false)
-							router.push(`/post/${post.slug}`)
-						}}
-						onCancel={() => setShowModal(false)}
-					/>
-				}
-				{
-					!user.login && <Input
+					</VStack>
+				) : (
+					user.login && (
+						<PostCreate
+							onCreate={(post) => {
+								setShowModal(false);
+								router.push(`/post/${post.slug}`);
+							}}
+							onCancel={() => setShowModal(false)}
+						/>
+					)
+				)}
+				{!user.login && (
+					<Input
 						placeholder="Vui lòng đăng nhập để đăng bài"
-						readOnly />
-				}
+						readOnly
+					/>
+				)}
 			</Box>
 
 			<VStack padding="10px 0">
-				{
-					posts.map(post => <PostCard key={post._id} post={post} />)
-				}
+				{posts.map((post) => (
+					<PostCard key={post._id} post={post} />
+				))}
 			</VStack>
 
-			<ScrollTrigger onEnter={() => setCurrent(prev => ++prev)} />
+			<ScrollTrigger onEnter={() => setCurrent((prev) => ++prev)} />
 
-			{
-				!end ? <PostSkeletons /> : <Image borderRadius="10px" src={endpage.src} alt="end page" />
-			}
-
+			{!end ? (
+				<PostSkeletons />
+			) : (
+				<Image borderRadius="10px" src={endpage.src} alt="end page" />
+			)}
 		</Container>
-	)
+	);
 }
