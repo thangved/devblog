@@ -160,11 +160,18 @@ export default function Post({ _post }) {
 
 			<Spacer height={20} />
 
+			<div
+				className="fb-comments"
+				data-href="https://developers.facebook.com/docs/plugins/comments#configurator"
+				data-width=""
+				data-numposts="5"
+			></div>
+
 			<Heading>Bài viết cùng tác giả</Heading>
 			<Divider />
 			<VStack mt="2">
-				{posts.map((post) => (
-					<PostCard key={post._id} post={post} />
+				{posts.map((p) => (
+					<PostCard key={p._id} post={p} />
 				))}
 			</VStack>
 
@@ -172,3 +179,4 @@ export default function Post({ _post }) {
 		</Container>
 	);
 }
+

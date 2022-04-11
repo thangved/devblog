@@ -11,6 +11,14 @@ export default function Layout({ children }) {
 	const router = useRouter();
 	return (
 		<Providers>
+			<div id="fb-root"></div>
+			<script
+				async
+				defer
+				crossOrigin="anonymous"
+				src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v13.0&appId=1304946696601356&autoLogAppEvents=1"
+				nonce="WRd1PPcG"
+			></script>
 			<div className={styles.wrapper}>
 				<Header />
 				<div className={styles.content}>{children}</div>
@@ -29,3 +37,4 @@ export default function Layout({ children }) {
 		</Providers>
 	);
 }
+
