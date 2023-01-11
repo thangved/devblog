@@ -18,7 +18,7 @@
 		"jsdom": "^19.0.0",
 		"jsonwebtoken": "^9.0.0",
 		"mongodb": "^4.4.0",
-		"mongoose": "^6.2.4",
+		"mongoose": "^6.4.6",
 		"mongoose-slug-updater": "^3.3.0",
 		"path": "^0.12.7"
 	},
